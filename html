@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>语音识别示例</title>
+</head>
+<body>
+    <h1>语音识别示例</h1>
+    <button id="startButton">开始语音输入</button>
+    <div id="output"></div>
+
+    <script>
+        const startButton = document.getElementById('startButton');
+        const outputDiv = document.getElementById('output');
+
+        // 检查浏览器是否支持Web Speech API
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new webkitSpeechRecognition();
+
+            // 设置语言为英语（可以根据需要更改）
+            recognition.lang = 'en-US';
+
+            // 在识别到语音时触发此事件
+            recognition.onresult = (event) => {
+                const result = event.results[0][0].transcript;
+                outputDiv.textContent = `识别结果：${result}`;
+            };
+
+            // 在点击按钮时启动语音识别
+            startButton.addEventListener('click', () => {
+                recognition.start();
+                outputDiv.textContent = '请开始说话...';
+            });
+        } else {
+            outputDiv.textContent = '抱歉，您的浏览器不支持语音识别。';
+        }
+    </script>
+</body>
+</html>
